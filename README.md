@@ -132,7 +132,7 @@ endmodule
 **Output Timing Waveform**
 ![wave](traffic.png)
 
-**Result:**
+**Result:**<br>
 Thus, a verilog HDL code is designed and simulated for the working of traffic light controller.
 
 
