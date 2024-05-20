@@ -1,0 +1,34 @@
+|traffic_light_controller
+clk => yellow_road3~reg0.CLK
+clk => yellow_road2~reg0.CLK
+clk => red_road3~reg0.CLK
+clk => red_road2~reg0.CLK
+clk => yellow_road1~reg0.CLK
+clk => green_road1~reg0.CLK
+clk => red_road1~reg0.CLK
+clk => state~21.DATAIN
+reset => state~25.DATAIN
+reset => yellow_road3~reg0.ENA
+reset => red_road1~reg0.ENA
+reset => green_road1~reg0.ENA
+reset => yellow_road1~reg0.ENA
+reset => red_road2~reg0.ENA
+reset => red_road3~reg0.ENA
+reset => yellow_road2~reg0.ENA
+mr3_spot => state~0.OUTPUTSELECT
+mr3_spot => state~1.OUTPUTSELECT
+mr3_spot => state~2.OUTPUTSELECT
+mr3_spot => state~3.OUTPUTSELECT
+mr3_spot => state~4.OUTPUTSELECT
+mr3_spot => state~5.OUTPUTSELECT
+mr3_spot => state~6.OUTPUTSELECT
+mr3_spot => state~7.OUTPUTSELECT
+red_road1 <= red_road1~reg0.DB_MAX_OUTPUT_PORT_TYPE
+green_road1 <= green_road1~reg0.DB_MAX_OUTPUT_PORT_TYPE
+yellow_road1 <= yellow_road1~reg0.DB_MAX_OUTPUT_PORT_TYPE
+red_road2 <= red_road2~reg0.DB_MAX_OUTPUT_PORT_TYPE
+red_road3 <= red_road3~reg0.DB_MAX_OUTPUT_PORT_TYPE
+yellow_road2 <= yellow_road2~reg0.DB_MAX_OUTPUT_PORT_TYPE
+yellow_road3 <= yellow_road3~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+

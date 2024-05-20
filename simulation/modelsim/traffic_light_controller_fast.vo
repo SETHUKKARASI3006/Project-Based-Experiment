@@ -1,0 +1,588 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// VENDOR "Altera"
+// PROGRAM "Quartus II 64-Bit"
+// VERSION "Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition"
+
+// DATE "05/20/2024 10:37:51"
+
+// 
+// Device: Altera EP2C5T144C6 Package TQFP144
+// 
+
+// 
+// This Verilog file should be used for ModelSim (Verilog) only
+// 
+
+`timescale 1 ps/ 1 ps
+
+module traffic_light_controller (
+	clk,
+	reset,
+	mr3_spot,
+	red_road1,
+	green_road1,
+	yellow_road1,
+	red_road2,
+	red_road3,
+	yellow_road2,
+	yellow_road3);
+input 	clk;
+input 	reset;
+input 	mr3_spot;
+output 	red_road1;
+output 	green_road1;
+output 	yellow_road1;
+output 	red_road2;
+output 	red_road3;
+output 	yellow_road2;
+output 	yellow_road3;
+
+// Design Ports Information
+// red_road1	=>  Location: PIN_32,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// green_road1	=>  Location: PIN_31,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// yellow_road1	=>  Location: PIN_75,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// red_road2	=>  Location: PIN_47,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// red_road3	=>  Location: PIN_60,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// yellow_road2	=>  Location: PIN_30,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// yellow_road3	=>  Location: PIN_73,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+// clk	=>  Location: PIN_17,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+// reset	=>  Location: PIN_18,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+// mr3_spot	=>  Location: PIN_21,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+
+
+wire gnd;
+wire vcc;
+wire unknown;
+
+assign gnd = 1'b0;
+assign vcc = 1'b1;
+assign unknown = 1'bx;
+
+tri1 devclrn;
+tri1 devpor;
+tri1 devoe;
+// synopsys translate_off
+initial $sdf_annotate("traffic_light_controller_v_fast.sdo");
+// synopsys translate_on
+
+wire \clk~combout ;
+wire \clk~clkctrl_outclk ;
+wire \mr3_spot~combout ;
+wire \state.S01~feeder_combout ;
+wire \reset~combout ;
+wire \state.S01~regout ;
+wire \red_road1~0_combout ;
+wire \red_road1~reg0_regout ;
+wire \green_road1~reg0feeder_combout ;
+wire \green_road1~reg0_regout ;
+wire \yellow_road2~reg0feeder_combout ;
+wire \yellow_road2~reg0_regout ;
+
+
+// Location: PIN_17,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+cycloneii_io \clk~I (
+	.datain(gnd),
+	.oe(gnd),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\clk~combout ),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(clk));
+// synopsys translate_off
+defparam \clk~I .input_async_reset = "none";
+defparam \clk~I .input_power_up = "low";
+defparam \clk~I .input_register_mode = "none";
+defparam \clk~I .input_sync_reset = "none";
+defparam \clk~I .oe_async_reset = "none";
+defparam \clk~I .oe_power_up = "low";
+defparam \clk~I .oe_register_mode = "none";
+defparam \clk~I .oe_sync_reset = "none";
+defparam \clk~I .operation_mode = "input";
+defparam \clk~I .output_async_reset = "none";
+defparam \clk~I .output_power_up = "low";
+defparam \clk~I .output_register_mode = "none";
+defparam \clk~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: CLKCTRL_G2
+cycloneii_clkctrl \clk~clkctrl (
+	.ena(vcc),
+	.inclk({gnd,gnd,gnd,\clk~combout }),
+	.clkselect(2'b00),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.outclk(\clk~clkctrl_outclk ));
+// synopsys translate_off
+defparam \clk~clkctrl .clock_type = "global clock";
+defparam \clk~clkctrl .ena_register_mode = "none";
+// synopsys translate_on
+
+// Location: PIN_21,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+cycloneii_io \mr3_spot~I (
+	.datain(gnd),
+	.oe(gnd),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\mr3_spot~combout ),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(mr3_spot));
+// synopsys translate_off
+defparam \mr3_spot~I .input_async_reset = "none";
+defparam \mr3_spot~I .input_power_up = "low";
+defparam \mr3_spot~I .input_register_mode = "none";
+defparam \mr3_spot~I .input_sync_reset = "none";
+defparam \mr3_spot~I .oe_async_reset = "none";
+defparam \mr3_spot~I .oe_power_up = "low";
+defparam \mr3_spot~I .oe_register_mode = "none";
+defparam \mr3_spot~I .oe_sync_reset = "none";
+defparam \mr3_spot~I .operation_mode = "input";
+defparam \mr3_spot~I .output_async_reset = "none";
+defparam \mr3_spot~I .output_power_up = "low";
+defparam \mr3_spot~I .output_register_mode = "none";
+defparam \mr3_spot~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: LCCOMB_X1_Y2_N30
+cycloneii_lcell_comb \state.S01~feeder (
+// Equation(s):
+// \state.S01~feeder_combout  = \mr3_spot~combout 
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\mr3_spot~combout ),
+	.cin(gnd),
+	.combout(\state.S01~feeder_combout ),
+	.cout());
+// synopsys translate_off
+defparam \state.S01~feeder .lut_mask = 16'hFF00;
+defparam \state.S01~feeder .sum_lutc_input = "datac";
+// synopsys translate_on
+
+// Location: PIN_18,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: Default
+cycloneii_io \reset~I (
+	.datain(gnd),
+	.oe(gnd),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\reset~combout ),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(reset));
+// synopsys translate_off
+defparam \reset~I .input_async_reset = "none";
+defparam \reset~I .input_power_up = "low";
+defparam \reset~I .input_register_mode = "none";
+defparam \reset~I .input_sync_reset = "none";
+defparam \reset~I .oe_async_reset = "none";
+defparam \reset~I .oe_power_up = "low";
+defparam \reset~I .oe_register_mode = "none";
+defparam \reset~I .oe_sync_reset = "none";
+defparam \reset~I .operation_mode = "input";
+defparam \reset~I .output_async_reset = "none";
+defparam \reset~I .output_power_up = "low";
+defparam \reset~I .output_register_mode = "none";
+defparam \reset~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: LCFF_X1_Y2_N31
+cycloneii_lcell_ff \state.S01 (
+	.clk(\clk~clkctrl_outclk ),
+	.datain(\state.S01~feeder_combout ),
+	.sdata(gnd),
+	.aclr(\reset~combout ),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.regout(\state.S01~regout ));
+
+// Location: LCCOMB_X1_Y2_N24
+cycloneii_lcell_comb \red_road1~0 (
+// Equation(s):
+// \red_road1~0_combout  = !\state.S01~regout 
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\state.S01~regout ),
+	.cin(gnd),
+	.combout(\red_road1~0_combout ),
+	.cout());
+// synopsys translate_off
+defparam \red_road1~0 .lut_mask = 16'h00FF;
+defparam \red_road1~0 .sum_lutc_input = "datac";
+// synopsys translate_on
+
+// Location: LCFF_X1_Y2_N25
+cycloneii_lcell_ff \red_road1~reg0 (
+	.clk(\clk~clkctrl_outclk ),
+	.datain(\red_road1~0_combout ),
+	.sdata(gnd),
+	.aclr(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(!\reset~combout ),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.regout(\red_road1~reg0_regout ));
+
+// Location: LCCOMB_X1_Y2_N26
+cycloneii_lcell_comb \green_road1~reg0feeder (
+// Equation(s):
+// \green_road1~reg0feeder_combout  = \state.S01~regout 
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\state.S01~regout ),
+	.cin(gnd),
+	.combout(\green_road1~reg0feeder_combout ),
+	.cout());
+// synopsys translate_off
+defparam \green_road1~reg0feeder .lut_mask = 16'hFF00;
+defparam \green_road1~reg0feeder .sum_lutc_input = "datac";
+// synopsys translate_on
+
+// Location: LCFF_X1_Y2_N27
+cycloneii_lcell_ff \green_road1~reg0 (
+	.clk(\clk~clkctrl_outclk ),
+	.datain(\green_road1~reg0feeder_combout ),
+	.sdata(gnd),
+	.aclr(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(!\reset~combout ),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.regout(\green_road1~reg0_regout ));
+
+// Location: LCCOMB_X1_Y2_N28
+cycloneii_lcell_comb \yellow_road2~reg0feeder (
+// Equation(s):
+// \yellow_road2~reg0feeder_combout  = \state.S01~regout 
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\state.S01~regout ),
+	.cin(gnd),
+	.combout(\yellow_road2~reg0feeder_combout ),
+	.cout());
+// synopsys translate_off
+defparam \yellow_road2~reg0feeder .lut_mask = 16'hFF00;
+defparam \yellow_road2~reg0feeder .sum_lutc_input = "datac";
+// synopsys translate_on
+
+// Location: LCFF_X1_Y2_N29
+cycloneii_lcell_ff \yellow_road2~reg0 (
+	.clk(\clk~clkctrl_outclk ),
+	.datain(\yellow_road2~reg0feeder_combout ),
+	.sdata(gnd),
+	.aclr(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(!\reset~combout ),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.regout(\yellow_road2~reg0_regout ));
+
+// Location: PIN_32,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \red_road1~I (
+	.datain(\red_road1~reg0_regout ),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(red_road1));
+// synopsys translate_off
+defparam \red_road1~I .input_async_reset = "none";
+defparam \red_road1~I .input_power_up = "low";
+defparam \red_road1~I .input_register_mode = "none";
+defparam \red_road1~I .input_sync_reset = "none";
+defparam \red_road1~I .oe_async_reset = "none";
+defparam \red_road1~I .oe_power_up = "low";
+defparam \red_road1~I .oe_register_mode = "none";
+defparam \red_road1~I .oe_sync_reset = "none";
+defparam \red_road1~I .operation_mode = "output";
+defparam \red_road1~I .output_async_reset = "none";
+defparam \red_road1~I .output_power_up = "low";
+defparam \red_road1~I .output_register_mode = "none";
+defparam \red_road1~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_31,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \green_road1~I (
+	.datain(\green_road1~reg0_regout ),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(green_road1));
+// synopsys translate_off
+defparam \green_road1~I .input_async_reset = "none";
+defparam \green_road1~I .input_power_up = "low";
+defparam \green_road1~I .input_register_mode = "none";
+defparam \green_road1~I .input_sync_reset = "none";
+defparam \green_road1~I .oe_async_reset = "none";
+defparam \green_road1~I .oe_power_up = "low";
+defparam \green_road1~I .oe_register_mode = "none";
+defparam \green_road1~I .oe_sync_reset = "none";
+defparam \green_road1~I .operation_mode = "output";
+defparam \green_road1~I .output_async_reset = "none";
+defparam \green_road1~I .output_power_up = "low";
+defparam \green_road1~I .output_register_mode = "none";
+defparam \green_road1~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_75,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \yellow_road1~I (
+	.datain(gnd),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(yellow_road1));
+// synopsys translate_off
+defparam \yellow_road1~I .input_async_reset = "none";
+defparam \yellow_road1~I .input_power_up = "low";
+defparam \yellow_road1~I .input_register_mode = "none";
+defparam \yellow_road1~I .input_sync_reset = "none";
+defparam \yellow_road1~I .oe_async_reset = "none";
+defparam \yellow_road1~I .oe_power_up = "low";
+defparam \yellow_road1~I .oe_register_mode = "none";
+defparam \yellow_road1~I .oe_sync_reset = "none";
+defparam \yellow_road1~I .operation_mode = "output";
+defparam \yellow_road1~I .output_async_reset = "none";
+defparam \yellow_road1~I .output_power_up = "low";
+defparam \yellow_road1~I .output_register_mode = "none";
+defparam \yellow_road1~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_47,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \red_road2~I (
+	.datain(vcc),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(red_road2));
+// synopsys translate_off
+defparam \red_road2~I .input_async_reset = "none";
+defparam \red_road2~I .input_power_up = "low";
+defparam \red_road2~I .input_register_mode = "none";
+defparam \red_road2~I .input_sync_reset = "none";
+defparam \red_road2~I .oe_async_reset = "none";
+defparam \red_road2~I .oe_power_up = "low";
+defparam \red_road2~I .oe_register_mode = "none";
+defparam \red_road2~I .oe_sync_reset = "none";
+defparam \red_road2~I .operation_mode = "output";
+defparam \red_road2~I .output_async_reset = "none";
+defparam \red_road2~I .output_power_up = "low";
+defparam \red_road2~I .output_register_mode = "none";
+defparam \red_road2~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_60,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \red_road3~I (
+	.datain(vcc),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(red_road3));
+// synopsys translate_off
+defparam \red_road3~I .input_async_reset = "none";
+defparam \red_road3~I .input_power_up = "low";
+defparam \red_road3~I .input_register_mode = "none";
+defparam \red_road3~I .input_sync_reset = "none";
+defparam \red_road3~I .oe_async_reset = "none";
+defparam \red_road3~I .oe_power_up = "low";
+defparam \red_road3~I .oe_register_mode = "none";
+defparam \red_road3~I .oe_sync_reset = "none";
+defparam \red_road3~I .operation_mode = "output";
+defparam \red_road3~I .output_async_reset = "none";
+defparam \red_road3~I .output_power_up = "low";
+defparam \red_road3~I .output_register_mode = "none";
+defparam \red_road3~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_30,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \yellow_road2~I (
+	.datain(\yellow_road2~reg0_regout ),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(yellow_road2));
+// synopsys translate_off
+defparam \yellow_road2~I .input_async_reset = "none";
+defparam \yellow_road2~I .input_power_up = "low";
+defparam \yellow_road2~I .input_register_mode = "none";
+defparam \yellow_road2~I .input_sync_reset = "none";
+defparam \yellow_road2~I .oe_async_reset = "none";
+defparam \yellow_road2~I .oe_power_up = "low";
+defparam \yellow_road2~I .oe_register_mode = "none";
+defparam \yellow_road2~I .oe_sync_reset = "none";
+defparam \yellow_road2~I .operation_mode = "output";
+defparam \yellow_road2~I .output_async_reset = "none";
+defparam \yellow_road2~I .output_power_up = "low";
+defparam \yellow_road2~I .output_register_mode = "none";
+defparam \yellow_road2~I .output_sync_reset = "none";
+// synopsys translate_on
+
+// Location: PIN_73,	 I/O Standard: 3.3-V LVTTL,	 Current Strength: 24mA
+cycloneii_io \yellow_road3~I (
+	.datain(gnd),
+	.oe(vcc),
+	.outclk(gnd),
+	.outclkena(vcc),
+	.inclk(gnd),
+	.inclkena(vcc),
+	.areset(gnd),
+	.sreset(gnd),
+	.differentialin(gnd),
+	.linkin(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.differentialout(),
+	.linkout(),
+	.padio(yellow_road3));
+// synopsys translate_off
+defparam \yellow_road3~I .input_async_reset = "none";
+defparam \yellow_road3~I .input_power_up = "low";
+defparam \yellow_road3~I .input_register_mode = "none";
+defparam \yellow_road3~I .input_sync_reset = "none";
+defparam \yellow_road3~I .oe_async_reset = "none";
+defparam \yellow_road3~I .oe_power_up = "low";
+defparam \yellow_road3~I .oe_register_mode = "none";
+defparam \yellow_road3~I .oe_sync_reset = "none";
+defparam \yellow_road3~I .operation_mode = "output";
+defparam \yellow_road3~I .output_async_reset = "none";
+defparam \yellow_road3~I .output_power_up = "low";
+defparam \yellow_road3~I .output_register_mode = "none";
+defparam \yellow_road3~I .output_sync_reset = "none";
+// synopsys translate_on
+
+endmodule
